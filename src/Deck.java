@@ -35,9 +35,14 @@ public class Deck {
         else
             return false;
     }
-   /* Random newRnd = new Main.rnd;
+    int next;
+    Card temporary;
+    int i = 0;
     void Shuffle(){
-        for(int i = 0; i < numberOfCards; i++)
-            int next = newRnd.nextInt(numberOfCards - 1);
-    }*/
+        for( ; i < numberOfCards; i++)
+            next = Main.rnd.nextInt(numberOfCards - 1);
+            temporary = currentDeckArray[next];
+            currentDeckArray[next] = currentDeckArray[i];
+            currentDeckArray[i] = temporary;
+    }
 }
