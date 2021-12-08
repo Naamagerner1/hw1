@@ -1,9 +1,9 @@
 import java.util.Random;
 
 public class Deck {
-    private Card[] currentDeckArray = new Card[52];
+    protected Card[] currentDeckArray = new Card[52];
     private String[] suitArray = {"SPADES", "DIAMONDS", "CLUBS", "HEARTS"};
-    private int numberOfCards = 0;
+    protected int numberOfCards = 0;
 
     public Deck(boolean answer){
         int counter = 0;
@@ -21,15 +21,17 @@ public class Deck {
 
     public void addCard(Card card){
         currentDeckArray[numberOfCards] = card;
+        numberOfCards++;
     }
 
-    Card removeTopCard(){
+    public Card removeTopCard(){
         Card cardToRemove = currentDeckArray[numberOfCards - 1];
         currentDeckArray[numberOfCards - 1] = null;
+        numberOfCards--;
         return cardToRemove;
     }
 
-    boolean isEmpty(){
+    public boolean isEmpty(){
         if(numberOfCards == 0)
             return true;
         else
@@ -38,7 +40,7 @@ public class Deck {
     int next;
     Card temporary;
     int i = 0;
-    void Shuffle(){
+    public void Shuffle(){
         for( ; i < numberOfCards; i++)
             next = Main.rnd.nextInt(numberOfCards - 1);
             temporary = currentDeckArray[next];
