@@ -4,6 +4,7 @@ public class Deck {
     protected Card[] currentDeckArray = new Card[52];
     private String[] suitArray = {"SPADES", "DIAMONDS", "CLUBS", "HEARTS"};
     protected int numberOfCards = 0;
+    //private int counter
 
     public Deck(boolean answer){
         int counter = 0;
