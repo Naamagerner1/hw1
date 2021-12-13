@@ -1,5 +1,5 @@
 public class Player {
-    private String name;
+    protected String name;
     private Deck playingDeck = new Deck (false);
     private Deck winningDeck = new Deck(false);
 
@@ -13,19 +13,19 @@ public class Player {
         else
             this.winningDeck.addCard(card);
     }
-
+    Card temp;
     public Card drawCard(){
-        if (playingDeck.isEmpty() && !winningDeck.isEmpty()) {
+        if (playingDeck.isEmpty() && winningDeck.isEmpty())
+            return null;
+
+        else if (playingDeck.isEmpty() && !winningDeck.isEmpty()) {
             winningDeck.Shuffle();
             playingDeck = winningDeck;
             winningDeck = new Deck(false);
         }
-        else if (playingDeck.isEmpty() && winningDeck.isEmpty()) {
-            return null; //////////////////////////////////////////////////////////////////////
-        }
 
         int index = playingDeck.numberOfCards - 1;
-        Card temp = playingDeck.currentDeckArray[index];
+        temp = playingDeck.currentDeckArray[index];
         playingDeck.removeTopCard();
         return temp;
     }

@@ -16,7 +16,7 @@ public class Deck {
                         counter++;
                     }
             }
-            numberOfCards = counter+1;
+            numberOfCards = counter;
         }
     }
 
@@ -26,10 +26,13 @@ public class Deck {
     }
 
     public Card removeTopCard(){
-        Card cardToRemove = currentDeckArray[numberOfCards - 1];
-        currentDeckArray[numberOfCards - 1] = null;
-        numberOfCards--;
-        return cardToRemove;
+        if (numberOfCards>0){
+            Card cardToRemove = currentDeckArray[numberOfCards - 1];
+            currentDeckArray[numberOfCards - 1] = null;
+            numberOfCards--;
+            return cardToRemove;
+        }
+        return null;
     }
 
     public boolean isEmpty(){
