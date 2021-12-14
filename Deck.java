@@ -1,9 +1,10 @@
 import java.util.Random;
 
 public class Deck {
-    private Card[] currentDeckArray = new Card[52];
-    private String[] suitArray = {"SPADES", "DIAMONDS", "CLUBS", "HEARTS"};
-    private int numberOfCards = 0;
+    protected Card[] currentDeckArray = new Card[52];
+    private String[] suitArray = {"♠", "♦", "♣", "♥"};
+    protected int numberOfCards = 0;
+    //private int counter
 
     public Deck(boolean answer){
         int counter = 0;
@@ -15,21 +16,23 @@ public class Deck {
                         counter++;
                     }
             }
-            numberOfCards = counter+1;
+            numberOfCards = counter;
         }
     }
 
     public void addCard(Card card){
         currentDeckArray[numberOfCards] = card;
+        numberOfCards++;
     }
 
-    Card removeTopCard(){
+    public Card removeTopCard(){
         Card cardToRemove = currentDeckArray[numberOfCards - 1];
         currentDeckArray[numberOfCards - 1] = null;
+        numberOfCards--;
         return cardToRemove;
     }
 
-    boolean isEmpty(){
+    public boolean isEmpty(){
         if(numberOfCards == 0)
             return true;
         else
@@ -37,12 +40,15 @@ public class Deck {
     }
     int next;
     Card temporary;
-    int i = 0;
-    void Shuffle(){
-        for( ; i < numberOfCards; i++)
-            next = Main.rnd.nextInt(numberOfCards - 1);
+    public void Shuffle(){
+        int i = 0;
+
+        while(i < numberOfCards) {
+            next = Main.rnd.nextInt(numberOfCards);
             temporary = currentDeckArray[next];
             currentDeckArray[next] = currentDeckArray[i];
             currentDeckArray[i] = temporary;
+            i++;
+        }
     }
 }
