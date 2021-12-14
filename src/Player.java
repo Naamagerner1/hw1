@@ -13,25 +13,25 @@ public class Player {
         else
             this.winningDeck.addCard(card);
     }
-    Card temp;
+    Card cardToDraw;
     public Card drawCard(){
-        if (playingDeck.isEmpty() && winningDeck.isEmpty())
-            return null;
+        //if (playingDeck.isEmpty() && winningDeck.isEmpty())
+            //return null;
 
-        else if (playingDeck.isEmpty() && !winningDeck.isEmpty()) {
+        if (playingDeck.isEmpty() && !winningDeck.isEmpty()) {
             winningDeck.Shuffle();
             playingDeck = winningDeck;
             winningDeck = new Deck(false);
         }
 
-        int index = playingDeck.numberOfCards - 1;
-        temp = playingDeck.currentDeckArray[index];
-        playingDeck.removeTopCard();
-        return temp;
+        //int index = playingDeck.numberOfCards - 1;
+        //temp = playingDeck.currentDeckArray[index];
+        cardToDraw = playingDeck.removeTopCard();
+        return cardToDraw;
     }
 
     public boolean outOfCards(){
-        if (drawCard() == null) {
+        if (playingDeck.isEmpty() && winningDeck.isEmpty()) {
             return true;
         }
         return false;

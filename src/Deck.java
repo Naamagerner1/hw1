@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Deck {
     protected Card[] currentDeckArray = new Card[52];
-    private String[] suitArray = {"SPADES", "DIAMONDS", "CLUBS", "HEARTS"};
+    private String[] suitArray = {"♠", "♦", "♣", "♥"};
     protected int numberOfCards = 0;
     //private int counter
 
@@ -26,13 +26,10 @@ public class Deck {
     }
 
     public Card removeTopCard(){
-        if (numberOfCards>0){
-            Card cardToRemove = currentDeckArray[numberOfCards - 1];
-            currentDeckArray[numberOfCards - 1] = null;
-            numberOfCards--;
-            return cardToRemove;
-        }
-        return null;
+        Card cardToRemove = currentDeckArray[numberOfCards - 1];
+        currentDeckArray[numberOfCards - 1] = null;
+        numberOfCards--;
+        return cardToRemove;
     }
 
     public boolean isEmpty(){
@@ -43,12 +40,15 @@ public class Deck {
     }
     int next;
     Card temporary;
-    int i = 0;
     public void Shuffle(){
-        for( ; i < numberOfCards; i++)
-            next = Main.rnd.nextInt(numberOfCards - 1);
+        int i = 0;
+
+        while(i < numberOfCards) {
+            next = Main.rnd.nextInt(numberOfCards);
             temporary = currentDeckArray[next];
             currentDeckArray[next] = currentDeckArray[i];
             currentDeckArray[i] = temporary;
+            i++;
+        }
     }
 }

@@ -13,9 +13,6 @@ public class WarGame {
         player2 = new Player(player2Name);
     }
 
-
-
-
     public String getPlayer1() {
         return player1Name;
     }
@@ -24,23 +21,28 @@ public class WarGame {
 
         return player2Name;
     }
-
-    int currPlayerIndex = 0;
+    Player start, last;
     public Player startPlayer(){
-        if (player1Name.compareTo(player2Name) == 1){
-            currPlayerIndex= 2;
+        if (player1Name.compareTo(player2Name) > 0){
+            start = player2;
+            last = player1;
             return player2;
         }
-        currPlayerIndex = 1;
-        return player1;
+        else{
+            start = player1;
+            last = player2;
+            return player1;
+        }
     }
+
     Player currPlayer;
+    int currPlayerIndex = 1;
     public Player switchPlayers(){
         currPlayerIndex = 3 - currPlayerIndex;
         if (currPlayerIndex == 1)
-            currPlayer = player1;
+            currPlayer = start;
         else
-            currPlayer = player2;
+            currPlayer = last;
 
         return currPlayer;
     }
@@ -56,11 +58,11 @@ public class WarGame {
             currPlayer = switchPlayers();
         }
     }
-    Card first;
 
     public void winnerInOneRound (Card first, Card second, Player ownFirst, Player ownSecond, boolean wasWar){
+        int finalNumberOfCards = centralDeck.numberOfCards;
         if (first.compare(second) == 1){
-            for (int i = 0; i< centralDeck.numberOfCards ; i++){
+            for (int i = 0; i <finalNumberOfCards ; i++){
                 Card toWinner = centralDeck.removeTopCard();
                 ownFirst.addCard(toWinner,false);
             }
@@ -72,7 +74,7 @@ public class WarGame {
 
         }
         else if (first.compare(second) == -1){
-            for (int i = 0; i< centralDeck.numberOfCards ; i++) {
+            for (int i = 0; i< finalNumberOfCards ; i++) {
                 Card toWinner = centralDeck.removeTopCard();
                 ownSecond.addCard(toWinner, false);
             }
@@ -84,38 +86,49 @@ public class WarGame {
 
         }
         System.out.println("Starting a war...");
-        wasWar = true;
-        Card warFirst, warSecond;
+        Card warFirst = null;
+        Card warSecond = null;
         int i = 3;
-        do{
+        while (i > 0){
             if (ownFirst.outOfCards()){
                 if (wasWar)
                     System.out.println(ownSecond.name + " won the war");
+                else
+                    System.out.println(ownSecond.name + " won");
+                return;
             }
             warFirst = ownFirst.drawCard();
             centralDeck.addCard(warFirst);
             if (i > 1)
                 System.out.println(ownFirst.name + " drew a war card");
+            else
+                System.out.println(ownFirst + " drew " + warFirst.toString());
 
             if (ownSecond.outOfCards()){
                 if (wasWar)
                     System.out.println(ownFirst.name + " won the war");
+                else
+                    System.out.println(ownFirst.name + " won");
+                return;
             }
             warSecond = ownSecond.drawCard();
             centralDeck.addCard(warSecond);
             if (i > 1)
                 System.out.println(ownSecond.name + " drew a war card");
+            else
+                System.out.println(ownSecond + " drew " + warSecond.toString());
 
             i--;
         }
-        while (i > 0);
+        wasWar = true;
+
         winnerInOneRound(warFirst,warSecond,ownFirst,ownSecond, wasWar);
     }
 
     public String start(){
         initializeGame();
         System.out.println("Initializing the game...");
-        Player currPlayer = startPlayer();
+        currPlayer = startPlayer();
         int n = 1;
         while (!player1.outOfCards() && !player2.outOfCards()){
             System.out.println("------------------------- Round number " + n +" -------------------------");
@@ -126,10 +139,11 @@ public class WarGame {
             currPlayer = switchPlayers();
             Card secondCard = currPlayer.drawCard();
             System.out.println(currPlayer + " drew " + secondCard.toString());
+            Player ownSecondCard = currPlayer;
             centralDeck.addCard(secondCard);
-            winnerInOneRound(firstCard,secondCard,ownFirstCard,currPlayer, false);
+            currPlayer = switchPlayers();
+            winnerInOneRound(firstCard,secondCard,ownFirstCard,ownSecondCard, false);
             n++;
-
         }
         if (player1.outOfCards()){
             return player2Name;
