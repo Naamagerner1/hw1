@@ -1,6 +1,6 @@
 public class Deck {
-    protected Card[] currentDeckArray = new Card[52];
-    protected int numberOfCards = 0;
+    private Card[] currentDeckArray = new Card[52];
+    private int numberOfCards = 0;
 
     /**
      * Creates a deck with 52 cards
@@ -68,5 +68,12 @@ public class Deck {
             currentDeckArray[i] = tempCard;
             i++;
         }
+    }
+
+    /**
+     * @return The number of cards in deck
+     */
+    public int getNumberOfCards(){
+        return numberOfCards;
     }
 }

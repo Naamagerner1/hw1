@@ -1,9 +1,9 @@
 public class WarGame {
-    protected String player1Name;
+    private String player1Name;
     private String player2Name;
     private Player player1;
     private Player player2;
-    Deck centralDeck = new Deck(true);
+    private Deck centralDeck = new Deck(true);
 
     /**
      * Sets the players names
@@ -72,7 +72,7 @@ public class WarGame {
     public void initializeGame () {
         centralDeck.Shuffle();
         Player currPlayer =  startPlayer();
-        while (centralDeck.numberOfCards > 0) {
+        while (centralDeck.getNumberOfCards() > 0) {
             Card tempCard = centralDeck.removeTopCard();
             currPlayer.addCard(tempCard, true);
             currPlayer = switchPlayers();
@@ -91,7 +91,7 @@ public class WarGame {
      * @param wasWar Boolean flag, true means that was a war
      */
     public void winnerInOneRound (Card first, Card second, Player ownFirst, Player ownSecond, boolean wasWar){
-        int finalNumberOfCards = centralDeck.numberOfCards;
+        int finalNumberOfCards = centralDeck.getNumberOfCards();
         if (first.compare(second) == 1){
             for (int i = 0; i <finalNumberOfCards ; i++){
                 Card toWinner = centralDeck.removeTopCard();

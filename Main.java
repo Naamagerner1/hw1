@@ -6,6 +6,13 @@ import java.util.Scanner;
 public class Main {
     public static Random rnd;
 
+    /**
+     * Scans input file, the number of games, the players names
+     * Run the games.
+     * Prints the winner name
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         String filePath = args[0];
         File file = new File(filePath);
